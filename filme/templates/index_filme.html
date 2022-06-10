@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .card{
+        height: 650px;
+    }
+
+</style>
+
+<div class="container padding">
+
+    <div id="nav_crud">
+
+        <a href="{% url 'filme:cadastrar' %}"><i class="fas fa-plus"></i> Cadastrar Manualmente</a>
+        <a href="{% url 'filme:cadastrar_request' %}"><i class="fas fa-plus"></i> Cadastrar via Request</a>
+        <a href="{% static 'json.zip' %}" download="filmes.zip"> Baixar JSON Filmes</a>
+    </div>
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>FILMES</b></h5>
+    </div>
+    <div class="row">
+
+        {% for filme in filmes %}
+            <div class="col">
+                <div class="card">
+                    <div id="nav_crud">
+                        <a href="{% url 'filme:editar' filme.id %}"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'filme:deletar' filme.id %}" onclick="return confirm('Deseja deletar este filme?')"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                    <div class="card-image">
+                        <img src="{{ filme.nome_da_imagem }}">
+                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons"><i class="fas fa-chevron-circle-right"></i></i></a>
+                    </div>
+                    <div class="card-content">
+                        <p><b>{{ filme.titulo }}</b></p>
+                        <br>
+
+                        {% if filme.descricao|length > 100 %}
+                            <p>{{ filme.descricao|truncatechars:100 }}</p>
+                        {% else %}
+                            <p>{{ filme.descricao }}</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+</div>
+
+{% endblock %}

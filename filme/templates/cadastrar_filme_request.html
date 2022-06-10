@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .painel{
+        display: grid;
+        grid-template-columns: 70% 30%;
+    }
+
+    .card{
+        text-align: center;
+        padding: 20px 0;
+    }
+    
+    form {
+        font-family: tahoma !important;
+        display: block !important;
+        margin: 0 auto !important;
+        width: 60% !important;
+        padding: 10px !important;
+        border:0px solid #ccc !important;
+    }
+
+    label{
+        color: #000 !important;
+        font-size: 20px;
+    }
+
+    textarea{
+        height: 100px;
+        border: 0px solid #eed;
+        border-bottom: 1px solid #aaa;
+    }
+
+    textarea:focus{
+        outline: 0;
+    }
+
+    .btn-cadastrar{
+        padding-top: 50px;
+        text-align: center;
+    }
+
+    .card-panel{
+        margin-bottom: 50px;
+    }
+
+    .alerta_sucesso {
+        font-size: 15px;
+        color: #3e881c;
+        padding: 7px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .alerta_erros {
+        font-size: 15px;
+        color: #bd3918;
+        padding: 7px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+</style>
+
+<div class="container padding"> 
+
+    {% if form.errors %}
+        <div class="alerta_erros"><i class="fas fa-exclamation-triangle"></i>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>CADASTRAR FILME</b></h5>
+    </div>
+
+    {% if cadastrado %}
+        Filme cadastrado com sucesso!
+        <style>
+            .btn-cadastrar{
+                visibility: hidden;
+            }
+        </style>
+    {% endif %}
+
+
+    <div class="painel">
+        
+        <form action="{% url 'filme:cadastrar_request' %}" method="post">
+            {% csrf_token %}
+
+            {{ form.pesquisar }}
+        
+            <div class="btn-cadastrar">
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+        </form>
+        <div>
+
+            {% if is_valid %}
+                {% if existe %}
+                    <div class="card" style="width: 12rem;">
+                        <img src="{{ url_imagem }}" style="height: 300px;" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="card-title"> {{ titulo }}</h4>
+                            <a href="{% url 'filme:cadastrar_via_request' %}?titulo={{ titulo }}" class="btn btn-primary"><i class="fas fa-plus"></i> Cadastrar</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Filme não encontrado!</p>
+                {% endif %}
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

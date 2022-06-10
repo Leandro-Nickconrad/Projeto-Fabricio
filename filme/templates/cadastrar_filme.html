@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    
+    form {
+        font-family: tahoma !important;
+        display: block !important;
+        margin: 0 auto !important;
+        width: 60% !important;
+        padding: 10px !important;
+        border:0px solid #ccc !important;
+    }
+
+    label{
+        color: #000 !important;
+        font-size: 20px;
+    }
+
+    textarea{
+        height: 100px;
+        border: 0px solid #eed;
+        border-bottom: 1px solid #aaa;
+    }
+
+    textarea:focus{
+        outline: 0;
+    }
+
+    .btn-cadastrar{
+        padding-top: 50px;
+        text-align: center;
+    }
+
+    .card-panel{
+        margin-bottom: 50px;
+    }
+
+    .alerta_sucesso {
+        font-size: 15px;
+        color: #3e881c;
+        padding: 7px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .alerta_erros {
+        font-size: 15px;
+        color: #bd3918;
+        padding: 7px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+</style>
+
+<div class="container padding"> 
+
+    {% if form.errors %}
+        <div class="alerta_erros"><i class="fas fa-exclamation-triangle"></i>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    {% if is_valid %}
+		<div class="alerta_sucesso"><i class="far fa-check-circle"></i> 
+			Filme foi cadastrado com sucesso!
+		</div>
+	{% endif %}
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>CADASTRAR FILME</b></h5>
+    </div>
+    <form action="{% url 'filme:cadastrar' %}" method="post">
+        {% csrf_token %}
+       
+        {{ form }} <span></span>
+       
+        <div class="btn-cadastrar">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

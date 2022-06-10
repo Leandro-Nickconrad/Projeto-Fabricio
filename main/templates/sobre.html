@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .card{
+        height: 650px;
+    }
+
+</style>
+
+<div class="container padding">
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>SOBRE</b></h5>
+    </div>
+    <div class="row">
+            
+            <h2>Tema</h2>
+           {{ tema }}
+
+           <h2>Objetivo</h2> 
+           {{ objetivo }}
+
+           <h2>Desenvolvedores</h2>
+           {{ desenvolvedores }}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load my_tags %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .btn_finalizar{
+        padding-top: 100px;
+        text-align: center;
+    }
+
+    .card{
+        height: 0px !important;
+    }
+
+    .card-image{
+        width: 200px;
+    }
+
+    .row{
+        display: grid !important;
+        grid-template-columns: 30% 70%;
+    }
+
+</style>
+
+<div class="container padding">
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>COMPRAR INGRESSO</b></h5>
+    </div>
+   
+    <div class="row">
+
+        {% for sessao in sessoes %} 
+
+                    <div class="card">  
+                        <div class="card-image">
+                            <img src="{{ sessao.nome_da_imagem }}">
+                        </div>      
+                    </div>
+                    
+                    <div class="card-content">
+                        <p>Sessão: <b>{{ sessao.id }}</b></p>
+                        <p>Filme da Sessão: <b>{{ sessao.id_filme }}</b></p>
+                        <p>SALA: <b>{{ sessao.num_sala }}</b></p>
+                        <p>HORÁRIO: <b>{{ sessao.horario }}</b></p>
+                        <p>DATA: <b>{{ sessao.dt_sessao }}</b></p>
+                        <p>Assento(s): 
+                        {% for i in assentos_selecionados %}
+                            {% if forloop.first %}
+                                <b> {{ i }}</b>
+                            {% else %}
+                                <b> - {{ i }}</b>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        <p>Valor total: <b>{{ sessao.valor_ingresso|mul:qtd_assentos }}0</b></p>
+                        
+                       
+                    </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="btn_finalizar">
+        <a href="{% url 'ingresso:compra_finalizada' id_sessao %}?assentos_selecionados={{ assentos_selecionados }}" class="waves-effect waves-light btn"><i class="fas fa-check"></i> Finalizar Compra</a>
+    </div>
+
+</div>
+
+{% endblock %}

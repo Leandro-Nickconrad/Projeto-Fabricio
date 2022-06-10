@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .card{
+        height: 650px;
+    }
+
+</style>
+
+<div class="container padding">
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>FILMES EM CARTAZ</b></h5>
+    </div>
+    <div class="row">
+            
+            {% for item in filmes_em_cartaz %}
+                <div class="col">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ item.nome_da_imagem }}">
+                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons"><i class="fas fa-chevron-circle-right"></i></i></a>
+                        </div>
+                        <div class="card-content">
+                            <p><b>{{ item.titulo }}</b></p>
+                            <br>
+                            {% if item.descricao|length > 100 %}
+                            <p>{{ item.descricao|truncatechars:100 }}</p>
+                            {% else %}
+                                <p>{{ item.descricao }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

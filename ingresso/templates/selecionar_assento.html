@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load my_tags %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+
+
+<style>
+
+        .row{
+            background-color: #eee;
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            margin: 0 auto;
+            border: 1px solid #aaa;
+        }
+
+        form{
+            padding-left: 50px;
+        }
+
+        .row span{
+            padding-right: 50px;
+        }
+
+        .btn-cadastrar{
+            margin-top: 30px;
+        }
+
+</style>
+
+
+<div class="container padding">
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>SELECIONAR ASSENTOS</b></h5>
+    </div>
+    <div class="row">
+
+        <form name="form" action="{% url 'ingresso:detalhar_venda' id_sessao %}?qtd_assentos={{ qtd_assentos }}" method="post">
+        {% csrf_token %}
+            
+            {% for item in lotacao.lotacao|times %}
+        
+                {% if item in assentos_vendidos %}
+
+                    {% if item < 10 %}
+                        <label>
+                            <input type="checkbox" disabled name="assentos" value="{{ item }}" />
+                            <span>0{{ item }}</span>
+                        </label>
+                    {% else %}
+                        <label>
+                            <input type="checkbox" disabled name="assentos" value="{{ item }}" />
+                            <span>{{ item }}</span>
+                        </label>
+                    {% endif %}
+                    
+                {% else %}
+
+                    {% if item < 10 %}
+                        <label>
+                            <input type="checkbox" name="assentos" value="{{ item }}" onclick="verificar()" />
+                            <span>0{{ item }}</span>
+                        </label>
+                    {% else %}
+                        <label>
+                            <input type="checkbox" name="assentos" value="{{ item }}" onclick="verificar()" />
+                            <span>{{ item }}</span>
+                        </label>
+                    {% endif %}
+                    
+                {% endif %}
+
+            {% endfor %}
+            
+            <div class="btn-cadastrar">
+                <button type="submit" class="btn btn-primary">Continuar</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var assentos_vendidos = {{ assentos_vendidos }};
+    
+    var CheckMaximo = "{{ qtd_assentos }}";
+   
+    function verificar() {
+        var Marcados = 1;
+        var objCheck = document.forms['form'].elements['assentos'];
+        
+        //Percorrendo os checks para ver quantos foram selecionados:
+        for (var iLoop = 0; iLoop<objCheck.length; iLoop++) {
+                //Se o número máximo de checkboxes ainda não tiver sido atingido, continua a verificação:
+                if (Marcados <= CheckMaximo) {
+                        if (objCheck[iLoop].checked) {
+                                Marcados++;
+                        }
+                        
+                        //Habilitando todos os checkboxes, pois o máximo ainda não foi alcançado.
+                        for (var i=0; i<objCheck.length; i++) {
+    
+                            if (assentos_vendidos.some(elem => elem-1 == i)){
+                                
+                                objCheck[i].disabled = true;
+                            }else{
+                                objCheck[i].disabled = false;
+                            }
+                            
+                        }
+
+                //Caso contrário, desabilitar o checkbox;
+                //Nesse caso, é necessário percorrer todas as opções novamente, desabilitando as não checadas;
+                } else {
+                        for (var i=0; i<objCheck.length; i++) {
+                                if(objCheck[i].checked == false) {
+                                        objCheck[i].disabled = true;
+                                }       
+                        }
+                }
+        }
+    }
+</script>
+
+{% endblock %}

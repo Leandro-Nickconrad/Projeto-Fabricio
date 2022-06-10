@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+	.card{
+        background: #FBE8A6;
+		height: 650px !important;
+	}
+    .container2{
+        float: right !important;
+    }
+
+</style>
+
+<div class="container padding">
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>COMPRAR INGRESSO</b></h5>
+    </div>
+   
+    <div class="row">
+
+        <div class="col">
+            <div class="card">
+                <div class="card-image">
+                    
+                </div>
+                <div class="card-content">
+                    <p>Sessão: <b>{{ sessao.id }}</b></p>
+                    <p>Filme da Sessão: <b>{{ sessao.id_filme }}</b></p>
+                    <p>SALA: <b>{{ sessao.num_sala }}</b></p>
+                    <p>HORÁRIO: <b>{{ sessao.horario }}</b></p>
+                    <p>DATA: <b>{{ sessao.dt_sessao }}</b></p>
+                    <!--<p>QTD. Assentos Disponíveis: <b>{{ sessao.qtd_assentos_livres }}</b></p>
+                    --><p>Valor do Ingresso: <b>{{ sessao.valor_ingresso }}</b></p>
+                    <i style="font-size: 100px;" class="fas fa-qrcode"></i>
+                    <i style="font-size: 100px;" class="fas fa-barcode"></i>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container2 padding margin">
+            <i style="font-size: 100px;color: green;" class="fas fa-check"></i>
+            <h5>Parabéns seu ingresso foi gerado com sucesso! </h5>
+            <p>Django Cinema deseja para você um excelente filme e muita diversão! ;D</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

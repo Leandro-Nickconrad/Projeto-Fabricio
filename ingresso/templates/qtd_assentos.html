@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .btn_finalizar{
+        padding-top: 100px;
+        text-align: center;
+    }
+
+    .card{
+        height: 0px !important;
+    }
+
+    .card-image{
+        width: 200px;
+    }
+
+    .row{
+        display: grid !important;
+        grid-template-columns: 30% 70%;
+    }
+
+    form{
+        padding-top: 100px;
+    }
+
+</style>
+
+<div class="container padding">
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>COMPRAR INGRESSO - Escolha a qtd. de ingressos para esta sessão</b></h5>
+    </div>
+   
+    <div class="row">
+
+        {% for sessao in sessoes %} 
+
+                    <div class="card">  
+                        <div class="card-image">
+                            <img src="{{ sessao.nome_da_imagem }}">
+                        </div>      
+                    </div>
+                    
+                    <div class="card-content">
+                        <p>Sessão: <b>{{ sessao.id }}</b></p>
+                        <p>Filme da Sessão: <b>{{ sessao.id_filme }}</b></p>
+                        <p>SALA: <b>{{ sessao.num_sala }}</b></p>
+                        <p>HORÁRIO: <b>{{ sessao.horario }}</b></p>
+                        <p>DATA: <b>{{ sessao.dt_sessao }}</b></p>
+                        <p>Valor do Ingresso: <b>{{ sessao.valor_ingresso }}</b></p>
+                    </div>
+
+        {% endfor %}
+
+    </div>
+
+    <form name="form" action="{% url 'ingresso:selecionar_assento' id_sessao %}" method="post">
+        {% csrf_token %}
+        
+        <input placeholder="Inf. qtd. ingressos" type="number" name="qtd_assentos" />
+
+        <div class="btn-cadastrar">
+                <button type="submit" class="btn btn-primary">Continuar</button>
+        </div>
+    </form>
+
+    
+
+</div>
+
+{% endblock %}

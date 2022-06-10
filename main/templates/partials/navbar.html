@@ -1,0 +1,47 @@
+{% load static %}
+
+<style>
+
+        #logout{
+          margin-left: 30px;
+          list-style-type: none;
+          color: #000;
+        }
+
+        #logout > a{
+          text-decoration: none;
+          padding-left: 10px;
+          color: red;
+          display: inline-block;
+        }
+
+</style>
+
+<nav class="white z-depth-0"> 
+    <div class="container">
+        {% if user.get_username == 'admin-web' %}
+            <a href="{% url 'main:index' %}" class="brand-logo brand-text left"><i class="fas fa-film"></i> DJCine</a>
+            <ul id="nav-mobile" class="right hide-on-small-and-down">
+                <li><a href="{% url 'filme:index' %}" class="btn brand z-depth-0">FILMES</a></li>
+                <li><a href="{% url 'sessao:index' %}" class="btn brand z-depth-0">SESSÕES</a></li>
+                <li><a href="{% url 'ingresso:index' %}" class="btn brand z-depth-0">INGRESSO</a></li>
+                <li><a class="btn brand z-depth-0" href="/admin/">Admin <i class="fa-solid fa-gear"></i></a></li>
+                <li id="logout" class="nav-item p-3">
+                    <span>Olá, <b style="color:rgb(58, 12, 70);">{{ user.get_username }}</b></span>  <a href="{% url 'autenticacao:logout' %}"> Sair</a>
+                </li>
+            </ul>
+                
+        {% else %}
+
+            <a href="{% url 'main:index' %}" class="brand-logo brand-text left"><i class="fas fa-film"></i> DJCine</a>
+            <ul id="nav-mobile" class="right hide-on-small-and-down">
+                <li><a href="{% url 'ingresso:index' %}" class="btn brand z-depth-0">INGRESSO</a></li>
+                <li id="logout" class="nav-item p-3">
+                    <span>Olá, <b style="color:rgb(58, 12, 70);">{{ user.get_username }}</b></span>  <a href="{% url 'autenticacao:logout' %}"> Sair</a>
+                </li>
+            </ul>    
+
+        {% endif %}
+        
+    </div>
+</nav>
