@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+
+<div class="container padding">
+
+    <div id="nav_crud">
+
+        <a href="{% url 'sessao:cadastrar' %}"><i class="fas fa-plus"></i> Cadastrar Sessão</a>
+        
+    </div>
+
+    <div class="card-panel">
+        <h5 class="center-align"><b>SESSAO</b></h5>
+    </div>
+    <div class="row">
+        
+        {% for sessao in sessoes %} 
+                
+                    <div class="col">
+                        <div class="card">
+                            <div id="nav_crud">
+                                <a href="{% url 'sessao:editar' sessao.id %}"><i class="fas fa-edit"></i></a>
+                                <a href="{% url 'sessao:deletar' sessao.id %}" onclick="return confirm('Deseja deletar este sessão?')"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                           
+                            <div class="card-image">
+                                <img src="{{ sessao.nome_da_imagem }}">
+                                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons"><i class="fas fa-chevron-circle-right"></i></i></a>
+                            </div>
+                            <div class="card-content">
+                                <p>Sessão: <b>{{ sessao.id }}</b></p><br>
+                                <p>Filme da Sessão: <b>{{ sessao.id_filme }}</b></p><br>
+                                <p>SALA: <b>{{ sessao.num_sala }}</b></p><br>
+                                <p>HORÁRIO: <b>{{ sessao.horario }}</b></p><br>
+                                <p>DATA: <b>{{ sessao.dt_sessao }}</b></p><br>
+                                <p>QTD. Assentos Disponíveis: <b>{{ sessao.qtd_assentos_livres }}</b></p><br>
+                                <p>Valor do Ingresso: <b>{{ sessao.valor_ingresso }}</b></p><br>
+                            </div>
+                        </div>
+                    </div>
+          
+        {% endfor %}
+</div>
+</div>
+
+{% endblock %}
